@@ -2,29 +2,79 @@ export default class UI {
     constructor() {
         this.GameBoard();
     }
-    
+
     GameBoard() {
+        const letterArray = ['H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
         const container = document.querySelector("#container");
-        container.style.gridTemplateColumns = "repeat(8, 1fr)";
-        container.style.gridTemplateRows = "repeat(8, 1fr)";
-        
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
 
-        for(let i = 0; i < 64; i++) {
-            const div = document.createElement("div");
-            if (i < 8) { div.setAttribute("id", `A${(i + 1)}`); }
-            if (i <= 16 && i > 7) { div.setAttribute("id", `B${(i - 7)}`); }
-            if (i <= 24 && i > 15) { div.setAttribute("id", `C${(i - 15)}`); }
-            if (i <= 32 && i > 23) { div.setAttribute("id", `D${(i - 23)}`); }
-            if (i <= 40 && i > 31) { div.setAttribute("id", `E${(i - 31)}`); }
-            if (i <= 48 && i > 39) { div.setAttribute("id", `F${(i - 39)}`); }
-            if (i <= 56 && i > 47) { div.setAttribute("id", `G${(i - 47)}`); }
-            if (i <= 64 && i > 55) { div.setAttribute("id", `H${(i - 55)}`); }
-            div.setAttribute("class", "board-cell");
-
-            container.appendChild(div)
+        let table = document.createElement('table');
+        for (let i = 1; i < 9; i++) {
+            let tr = document.createElement('tr');
+            tr.dataset.rowname = letterArray[i - 1];
+            for (let j = 1; j < 9; j++) {
+                let td = document.createElement('td');
+                td.dataset.number = `${j}`
+                if (i % 2 == j % 2) {
+                    td.className = 'white';
+                } else {
+                    td.classname = 'black';
+                }
+                if (tr.dataset.rowname == 'G') {
+                    td.dataset.currentPiece = 'pawn';
+                    td.innerHTML = "<img src='../dist/img/pawn_black.png'>";
+                }
+                if (tr.dataset.rowname == 'B') {
+                    td.dataset.currentPiece = 'pawn';
+                    td.innerHTML = "<img src='../dist/img/pawn_white.png'>";
+                }
+                if (tr.dataset.rowname == 'A') {
+                    if (td.dataset.number == 1 || td.dataset.number == 8) {
+                        td.dataset.currentPiece = 'rook';
+                        td.innerHTML = "<img src='../dist/img/rook_white.png'>";
+                    }
+                    if (td.dataset.number == 2 || td.dataset.number == 7) {
+                        td.dataset.currentPiece = 'knight';
+                        td.innerHTML = "<img src='../dist/img/knight_white.png'>";
+                    }
+                    if (td.dataset.number == 3 || td.dataset.number == 6) {
+                        td.dataset.currentPiece = 'bishop';
+                        td.innerHTML = "<img src='../dist/img/bishop_white.png'>";
+                    }
+                    if (td.dataset.number == 4) {
+                        td.dataset.currentPiece = 'queen';
+                        td.innerHTML = "<img src='../dist/img/queen_white.png'>";
+                    }
+                    if (td.dataset.number == 5) {
+                        td.dataset.currentPiece = 'king';
+                        td.innerHTML = "<img src='../dist/img/king_white.png'>";
+                    }
+                }
+                if (tr.dataset.rowname == 'H') {
+                    if (td.dataset.number == 1 || td.dataset.number == 8) {
+                        td.dataset.currentPiece = 'rook';
+                        td.innerHTML = "<img src='../dist/img/rook_black.png'>"
+                    }
+                    if (td.dataset.number == 2 || td.dataset.number == 7) {
+                        td.dataset.currentPiece = 'knight';
+                        td.innerHTML = "<img src='../dist/img/knight_black.png'>";
+                    }
+                    if (td.dataset.number == 3 || td.dataset.number == 6) {
+                        td.dataset.currentPiece = 'bishop';
+                        td.innerHTML = "<img src='../dist/img/bishop_black.png'>";
+                    }
+                    if (td.dataset.number == 4) {
+                        td.dataset.currentPiece = 'queen';
+                        td.innerHTML = "<img src='../dist/img/queen_black.png'>";
+                    }
+                    if (td.dataset.number == 5) {
+                        td.dataset.currentPiece = 'king';
+                        td.innerHTML = "<img src='../dist/img/king_black.png'>";
+                    }
+                }
+                tr.appendChild(td)
+            }
+            table.appendChild(tr);
         }
+        container.appendChild(table)
     }
 }
